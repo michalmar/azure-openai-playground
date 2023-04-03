@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Python Functions",
+      "type": "python",
+      "request": "attach",
+      "port": 9091,
+      "preLaunchTask": "func: host start"
+    },
+    {
+      "name": "Streamlit Application",
+      "type": "python",
+      "request": "launch",
+      "module": "streamlit",
+      "justMyCode": true,
+      "cwd": "${workspaceFolder}/code",
+      "args": [
+        "run",
+        "Home.py",
+        "--server.enableCORS", "false", 
+        "--server.enableXsrfProtection", "false",
+        "--server.port",  "8501"
+      ]
+    }
+  ]
+}

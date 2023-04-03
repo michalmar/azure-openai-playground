@@ -1,0 +1,13 @@
+Potřebuju se dostat na Budějovickou z Karlova náměstí dneska, abych byl na místě do 16:00.
+
+Z požadavku výše na dopravní informace a navigaci, extrahuj následující:
+
+1. Odkud se pojede
+2. Kam se pojede
+3. Který den je plánovaný odjezd, když není napiš "není"
+4. Který čas je plánovaný odjezd, když není napiš "není"
+5. Který den je plánovaný příjezd, když není napiš "není"
+6. Který čas je plánovaný příjezd, když není napiš "není"
+7. Může být spoj s přestupem? Když není uvedeno, napiš "není"
+
+Výstup v JSON v Markdown formátu.
