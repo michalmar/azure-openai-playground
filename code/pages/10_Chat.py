@@ -154,7 +154,9 @@ try:
             st.tokens_response = st.slider("Tokens response length", 100, 2000, 1000)
             st.temperature = st.slider("Temperature", 0.0, 1.0, 0.8)
     
-    question = st.text_input("Chat", default_question)
+    # question = st.text_input("Chat", default_question)
+    question = st.text_area(label="Chat", height=100)
+
     st.caption(f"To clear the conversation, refresh the page | current model: **{model}**")
     # st.button("Ask", on_click=ask_bot)
     # st.button("Clear conversation", on_click=clear_conversation)
