@@ -17,10 +17,21 @@ def get_custom_prompt():
 
 def customcompletion():
     _, response = utils.get_completion(get_custom_prompt(), max_tokens=st.tokens_response, model=os.getenv('OPENAI_ENGINES', 'text-davinci-003'), temperature=st.temperature)
+    
+    # st.session_state['memory'].append({"question": st.session_state['customtext'],"prompt": get_custom_prompt(), "response": response['choices'][0]['text'].encode().decode()})
+    st.session_state['memory'].append({"prompt": get_custom_prompt(), "response": response['choices'][0]['text'].encode().decode()})
+    
     st.session_state['result'] = response['choices'][0]['text'].encode().decode()
     st.session_state['response'] = response['usage']
 
-
+def display_memory():
+    
+    with st.expander("Memory"):
+        if (len(st.session_state['memory']) > 0):
+            # st.text_area(label="Memory", value=st.session_state['memory'], height=200)
+            st.json(st.session_state['memory'])
+        else:
+            st.caption("Empty")
 
 try:
     # Set page layout to wide screen and menu item
@@ -48,8 +59,11 @@ try:
     else:
         # print("prompts exists, not fetching from storage")
         pass
-    
+     
     prompts = st.session_state['prompts']
+
+    if 'memory' not in st.session_state:
+        st.session_state['memory'] = []
 
     if 'example' not in st.session_state:
         st.session_state['example'] = ""
@@ -85,6 +99,8 @@ try:
         st.write(result)
         st.write("Response details:")
         st.write(response)
+    
+    display_memory()
 
 except URLError as e:
     st.error(
