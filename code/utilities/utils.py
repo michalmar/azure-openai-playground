@@ -17,7 +17,8 @@ from langchain.embeddings import OpenAIEmbeddings
 
 def initialize(engine='davinci'):
     openai.api_type = "azure"
-    openai.api_version = "2023-03-15-preview"
+    # openai.api_version = "2023-03-15-preview"
+    openai.api_version = "2022-12-01"
     openai.api_base = os.getenv('OPENAI_API_BASE')
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
