@@ -26,7 +26,7 @@ def customcompletion():
 
 def display_memory():
     
-    with st.expander("Memory"):
+    with st.expander("History"):
         if (len(st.session_state['memory']) > 0):
             # st.text_area(label="Memory", value=st.session_state['memory'], height=200)
             st.json(st.session_state['memory'])

@@ -13,6 +13,16 @@ df = utils.initialize(engine='davinci')
 def get_languages():
     return translator.get_available_languages()
 
+
+def display_memory():
+    
+    with st.expander("History"):
+        if (len(st.session_state['memory']) > 0):
+            # st.text_area(label="Memory", value=st.session_state['memory'], height=200)
+            st.json(st.session_state['memory'])
+        else:
+            st.caption("Empty")
+
 try:
 
     default_prompt = "" 
@@ -33,6 +43,9 @@ try:
         st.session_state['limit_response'] = True
     if 'full_prompt' not in st.session_state:
         st.session_state['full_prompt'] = ""
+    
+    if 'memory' not in st.session_state:
+        st.session_state['memory'] = []
 
     # Set page layout to wide screen and menu item
     menu_items = {
@@ -71,6 +84,7 @@ try:
         if question != st.session_state['question']:
             st.session_state['question'] = question
             st.session_state['full_prompt'], st.session_state['response'] = utils.get_semantic_answer(df, question, st.session_state['prompt'] ,model=model, engine='davinci', limit_response=st.session_state['limit_response'], tokens_response=st.tokens_response, temperature=st.temperature)
+            st.session_state['memory'].append({"question":question, "response": st.session_state['response']['choices'][0]['text'].encode().decode()})
             st.write(f"Q: {question}")  
             # st.write(st.session_state['response']['choices'][0]['text'])
             st.markdown(f"{st.session_state['response']['choices'][0]['text']}")
@@ -86,7 +100,9 @@ try:
     if st.session_state['translation_language'] is not None:
         st.write(f"Translation to other languages, 翻译成其他语言, النص باللغة العربية")
         st.write(f"{translator.translate(st.session_state['response']['choices'][0]['text'], available_languages[st.session_state['translation_language']])}")		
-		
+	
+    display_memory()
+
 except URLError as e:
     st.error(
         """
