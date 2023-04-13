@@ -11,14 +11,14 @@ def clear_summary():
     st.session_state['summary'] = ""
 
 def get_custom_prompt():
-    customtext = st.session_state['customtext']
-    customprompt = "{}".format(customtext)
+    prompt_text = st.session_state['prompt_text']
+    customprompt = "{}".format(prompt_text)
     return customprompt
 
 def customcompletion():
     _, response = utils.get_completion(get_custom_prompt(), max_tokens=st.tokens_response, model=os.getenv('OPENAI_ENGINES', 'text-davinci-003'), temperature=st.temperature)
     
-    # st.session_state['memory'].append({"question": st.session_state['customtext'],"prompt": get_custom_prompt(), "response": response['choices'][0]['text'].encode().decode()})
+    # st.session_state['memory'].append({"question": st.session_state['prompt_text'],"prompt": get_custom_prompt(), "response": response['choices'][0]['text'].encode().decode()})
     st.session_state['memory'].append({"prompt": get_custom_prompt(), "response": response['choices'][0]['text'].encode().decode()})
     
     st.session_state['result'] = response['choices'][0]['text'].encode().decode()
@@ -82,7 +82,7 @@ try:
             )
 
     # displaying a box for a custom prompt
-    st.session_state['customtext'] = st.text_area(label="Prompt", key='prompt', height=400, value=prompts[example])
+    st.session_state['prompt_text'] = st.text_area(label="Prompt", key='prompt', height=400, value=prompts[example])
     st.button(label="Generate", on_click=customcompletion)
     
     # displaying the summary
