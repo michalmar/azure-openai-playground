@@ -61,12 +61,16 @@ Additional instructions:
 def display_conversation():
     # print(f"Conversations - model: {model} ")
     with st.container():
+        if (len(st.session_state['messages']) > 1):
+            st.caption("Conversation history")
         for message in st.session_state['messages']:
-
+            # assitant
             if (message['role'] == "assistant"):
                 st.write(f":red[{message['role']}({model})]: {message['content']}")
+            # user
             elif (message['role'] == "user"):
                 st.write(f":blue[{message['role']}]: {message['content']}")
+            # system
             elif (message['role'] == "system"):
                 # do not print system messages
                 pass
@@ -83,12 +87,14 @@ def add_message(who, msg):
     else:
         print(f"ERROR: add_message() - who is not valid: {who}")
 
-def ask_bot(model):
+def ask_bot(model = "gpt-35-turbo"):
+    st.session_state['question'] = st.session_state.q
     add_message("user", st.session_state['question'])
     
     response = send_message(messages = st.session_state['messages'], model_name=model)
     add_message("assistant", response)
-    
+    st.session_state['question'] = ""
+
     return True
 
 # not used
@@ -142,8 +148,6 @@ try:
     col1, col2, col3 = st.columns([1,2,1])
     with col1:
         st.image(os.path.join('images','microsoft.png'))
-
-    col1, col2, col3 = st.columns([2,2,2])
     with col3:
         with st.expander("Settings"):
             model = st.selectbox(
@@ -154,17 +158,27 @@ try:
             st.tokens_response = st.slider("Tokens response length", 100, 2000, 1000)
             st.temperature = st.slider("Temperature", 0.0, 1.0, 0.8)
     
-    # question = st.text_input("Chat", default_question)
-    question = st.text_area(label="Chat", height=100)
-
-    st.caption(f"To clear the conversation, refresh the page | current model: **{model}**")
-    # st.button("Ask", on_click=ask_bot)
-    # st.button("Clear conversation", on_click=clear_conversation)
-    
-    if question != '':
-        st.session_state['question'] = question
-        ask_bot(model)
+    col1, col2, col3 = st.columns([1,4,1])
+    with col2:
         display_conversation()
+    
+    col1, col2 = st.columns([10,1])
+    with col1:
+        st.text_area(label="Chat", height=100, key="q")
+    with col2:
+        st.write("")
+        st.button("Ask", on_click=ask_bot)
+        st.write(
+                """<style>
+                [data-testid="stHorizontalBlock"] {
+                    align-items: center;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True
+        )
+    st.caption(f"To clear the conversation, refresh the page | current model: **{model}**")
+
 
 except URLError as e:
     st.error(
