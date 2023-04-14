@@ -15,5 +15,5 @@ requests==2.28.2
 tiktoken==0.2.0
 azure-storage-queue==12.5.0
 
-faiss
+faiss-cpu
 bs4
