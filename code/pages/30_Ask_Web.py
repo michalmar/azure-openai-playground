@@ -71,7 +71,7 @@ def get_response(qa, question):
 
 def set_url():
     # st.write(f'URL: {st.session_state['web_url']}')
-    st.session_state["web_url"] =  st.session_state["url_input"]
+    st.session_state["web_url"] =  st.session_state["url_input"].strip()
     pass
 
 # df = utils.initialize(engine='davinci')
