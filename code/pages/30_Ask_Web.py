@@ -65,7 +65,7 @@ def load_page(embeddings, llm):
 def get_response(qa, question):
     query = question
     # query = "Jak ušetřit energii?"
-    result = qa({"question": query, "chat_history": st.session_state['messages']})
+    result = qa({"question": query, "chat_history": st.session_state['messages_web_hist']})
 
     return result
 
@@ -78,9 +78,9 @@ def set_url():
 (llm, embeddings) = initialize()
 
 def display_conversation():
-    if (len(st.session_state['messages']) > 0):
+    if (len(st.session_state['messages_web_hist']) > 0):
         with st.expander("History"):
-            for message in st.session_state['messages']:
+            for message in st.session_state['messages_web_hist']:
                 st.caption(f":blue[Question:]: {message[0]}")
                 st.caption(f":blue[Answer:]: {message[1]}")
 
@@ -90,7 +90,7 @@ try:
     default_question = "" 
     default_answer = ""
     default_web = ""
-    messages = []
+    messages_web_hist = []
 
     if 'question' not in st.session_state:
         st.session_state['question'] = default_question
@@ -100,8 +100,8 @@ try:
         st.session_state['qa'] = ""
     if 'kbinit' not in st.session_state:
         st.session_state['kbinit'] = False
-    if 'messages' not in st.session_state:
-        st.session_state['messages'] = messages
+    if 'messages_web_hist' not in st.session_state:
+        st.session_state['messages_web_hist'] = messages_web_hist
         # add_message("system", st.session_state['system'])
     
     #  Set page layout to wide screen and menu item
@@ -149,7 +149,7 @@ try:
             # st.write("Question:", question)
             st.write(":blue[Answer]:", result["answer"])
 
-            st.session_state['messages'].append((question, result["answer"]))
+            st.session_state['messages_web_hist'].append((question, result["answer"]))
 
 
     st.caption(f"To clear the conversation, refresh the page | current model: **{model}**")

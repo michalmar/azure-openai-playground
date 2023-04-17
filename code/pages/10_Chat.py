@@ -63,18 +63,18 @@ def display_conversation():
     with st.container():
         if (len(st.session_state['messages']) > 1):
             st.caption("Conversation history")
-        for message in st.session_state['messages']:
-            # assitant
-            if (message['role'] == "assistant"):
-                st.write(f":red[{message['role']}({model})]: {message['content']}")
-            # user
-            elif (message['role'] == "user"):
-                st.write(f":blue[{message['role']}]: {message['content']}")
-            # system
-            elif (message['role'] == "system"):
-                # do not print system messages
-                pass
-            # st.write("---")
+            for message in st.session_state['messages']:
+                # assitant
+                if (message['role'] == "assistant"):
+                    st.write(f":red[{message['role']}({model})]: {message['content']}")
+                # user
+                elif (message['role'] == "user"):
+                    st.write(f":blue[{message['role']}]: {message['content']}")
+                # system
+                elif (message['role'] == "system"):
+                    # do not print system messages
+                    pass
+                # st.write("---")
 
 # potential roles: system, user, assistant
 def add_message(who, msg):
