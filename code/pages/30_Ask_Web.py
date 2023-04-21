@@ -152,7 +152,9 @@ try:
             st.session_state['messages_web_hist'].append((question, result["answer"]))
 
 
-    st.caption(f"To clear the conversation, refresh the page | current model: **{model}**")
+    # st.caption(f"To clear the conversation, refresh the page | current model: **{model}**")
+    # TODO -> add model selection
+    st.caption(f"To clear the conversation, refresh the page | current model: **ChatGPT**")
 
     col1, col2, col3 = st.columns([1,4,1])
     with col2:
