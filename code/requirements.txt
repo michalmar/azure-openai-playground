@@ -17,3 +17,4 @@ azure-storage-queue==12.5.0
 
 faiss-cpu
 bs4
+langchain

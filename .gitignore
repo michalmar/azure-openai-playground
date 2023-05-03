@@ -5,3 +5,4 @@ code/utilities/__pycache__
 __pycache__
 code/local.settings.json
 test/
+.DS_Store

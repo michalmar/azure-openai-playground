@@ -44,6 +44,10 @@ def load_page(embeddings, llm):
     text_splitter = TokenTextSplitter(chunk_size=1000, chunk_overlap=0)
     docs = text_splitter.split_documents(documents)
 
+    # keep only first record from docs variable
+    # docs = docs[:1]
+
+
     db = FAISS.from_documents(documents=docs, embedding=embeddings)
 
     # Adapt if needed
