@@ -33,6 +33,9 @@ def display_memory():
         else:
             st.caption("Empty")
 
+def beutify_result(input_string):
+    return input_string.replace('\n', '  \n')
+
 try:
     # Set page layout to wide screen and menu item
     menu_items = {
@@ -69,11 +72,12 @@ try:
         st.session_state['example'] = ""
 
     st.markdown("## Bring your own prompt")
-    st.caption("known issue: when changing the prompt, the generated response is not updated or text ['Not in the text.'] appears. Please generate again to fix.")
+    # st.caption("known issue: when changing the prompt, the generated response is not updated or text ['Not in the text.'] appears. Please generate again to fix.")
 
-    st.tokens_response = st.slider("Tokens response length", 100, 1000, 400)
-    st.temperature = st.slider("Temperature", 0.0, 1.0, 0.7)
-    # st.selectbox("Language", [None] + list(available_languages.keys()), key='translation_language')
+    with st.expander("Settings"):
+        st.tokens_response = st.slider("Tokens response length", 100, 1000, 400)
+        st.temperature = st.slider("Temperature", 0.0, 1.0, 0.7)
+        # st.selectbox("Language", [None] + list(available_languages.keys()), key='translation_language')
     
     # parse dictionary of prompts yielding a list keys only
     example = st.selectbox(
@@ -92,11 +96,12 @@ try:
     if 'result' in st.session_state:
         result = st.session_state['result']
     # st.text_area(label="OpenAI result", value=result, height=200)
-    
+
+
     response = "None"
     if 'response' in st.session_state:
         response = st.session_state["response"]
-        st.write(result)
+        st.write(beutify_result(result))
         st.write("Response details:")
         st.write(response)
     
