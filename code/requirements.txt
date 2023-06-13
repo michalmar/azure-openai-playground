@@ -1,7 +1,7 @@
 azure-functions
 langchain
 streamlit==1.17.0
-openai==0.27.2
+openai
 matplotlib==3.6.3
 plotly==5.12.0
 scipy==1.10.0
@@ -17,4 +17,5 @@ azure-storage-queue==12.5.0
 
 faiss-cpu
 bs4
-langchain
+tabulate
+altair<5
