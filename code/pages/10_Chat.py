@@ -4,6 +4,11 @@ import pandas as pd
 from utilities import utils, translator
 import os
 
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_random_exponential,
+)
 
 import openai
 
@@ -21,12 +26,13 @@ def initialize(engine='davinci'):
 df = initialize()
 
 # Defining a function to send the prompt to the ChatGPT model
+@retry(wait=wait_random_exponential(min=3, max=20), stop=stop_after_attempt(5))    
 def send_message(messages, model_name=  "gpt-35-turbo", max_response_tokens=500):
     
     # model_name = "gpt-35-turbo"
     # model_name = "gpt-4"
 
-
+    
     response = openai.ChatCompletion.create(
     engine=model_name, 
     messages=messages,
@@ -42,6 +48,8 @@ def send_message(messages, model_name=  "gpt-35-turbo", max_response_tokens=500)
 
     # GPT-4 api
     tmp_response = response['choices'][0]["message"]["content"].strip()
+
+    print(f"response time: {tmp_response.response_ms / 1000}")
 
     # {"model": model_name, "response": tmp_response}
     return tmp_response
