@@ -18,16 +18,7 @@ def display_memory():
         else:
             st.caption("Empty")
 
-import random
-import string
 
-def generate_random_string(length):
-    # Define a string of lowercase letters
-    letters = string.ascii_lowercase
-    # Use a list comprehension to generate a list of random letters of the specified length
-    random_letters = [random.choice(letters) for i in range(length)]
-    # Join the list of random letters into a single string and return it
-    return ''.join(random_letters)
 
 try:
     # Set page layout to wide screen and menu item
@@ -45,10 +36,7 @@ try:
     with col1:
         st.image(os.path.join('images','microsoft.png'))
 
-    user_name = "USER"
-    random_string = generate_random_string(10)
-    user_name += random_string
-    st.title(f"Hello user {user_name}!")
+    st.title(f"Hello user <placehoder>!")
 
 
 
